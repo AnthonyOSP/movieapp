@@ -12,7 +12,7 @@ using movieappauth.Data;
 namespace movieappauth.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240424091234_InitialSetup")]
+    [Migration("20240424093330_InitialSetup")]
     partial class InitialSetup
     {
         /// <inheritdoc />
