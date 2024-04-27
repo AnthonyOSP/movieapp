@@ -12,8 +12,8 @@ using movieappauth.Data;
 namespace movieappauth.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240424102713_ContactoMigracion")]
-    partial class ContactoMigracion
+    [Migration("20240425221834_ProductoMigracion")]
+    partial class ProductoMigracion
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -248,6 +248,30 @@ namespace movieappauth.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("t_contacto");
+                });
+
+            modelBuilder.Entity("movieappauth.Models.Producto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("t_producto");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
