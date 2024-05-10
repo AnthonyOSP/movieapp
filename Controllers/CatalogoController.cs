@@ -21,10 +21,11 @@ namespace movieappauth.Controllers
 
         private readonly UserManager<IdentityUser> _userManager;
 
-        public CatalogoController(ILogger<CatalogoController> logger, ApplicationDbContext context)
+        public CatalogoController(ILogger<CatalogoController> logger, ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _logger = logger;
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult Index(string? searchString)
@@ -52,6 +53,15 @@ namespace movieappauth.Controllers
                 return View("Index", productos);
              }else{
                 var producto = await _context.DataProducto.FindAsync(id);
+                Util.SessionExtensions.Set<Producto>(HttpContext.Session, "MiUltimoProducto", producto);
+                Proforma proforma = new Proforma();
+                proforma.Producto = producto;
+                proforma.Precio = producto.Price;
+                proforma.Cantidad = 1;
+                proforma.UserID= userID;
+                _context.Add(proforma);
+                await _context.SaveChangesAsync();
+                ViewData["Message"] = "Se agrego al carrito";
                 return RedirectToAction(nameof(Index));
              }
         }
